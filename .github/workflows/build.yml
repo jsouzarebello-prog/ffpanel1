@@ -11,15 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Find zip and unzip
+      - name: Unzip project and locate build root
         run: |
-          ZIP_FILE=$(find . -maxdepth 2 -iname "*ffpanel*.zip" | head -n 1)
-          echo "Zip encontrado: $ZIP_FILE"
-          if [ -z "$ZIP_FILE" ]; then
-            echo "NENHUM zip encontrado no repositório. Confere o upload."
-            exit 1
-          fi
-          unzip -o "$ZIP_FILE" -d extracted
+          unzip -o FFPanel_source.zip -d extracted
           PROJECT_DIR=$(find extracted -maxdepth 3 -name "settings.gradle" -exec dirname {} \;)
           echo "Projeto encontrado em: $PROJECT_DIR"
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
